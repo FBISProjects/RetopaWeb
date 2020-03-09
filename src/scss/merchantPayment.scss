@@ -1,0 +1,73 @@
+.cardsContainer {
+  padding: 50px 30px;
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.100279);
+}
+
+.cardBtn {
+  width: 100%;
+  max-width: 371px;
+  height: 173px;
+  button.ant-btn {
+    background: #fdfdfd;
+    border: 1px solid #ade0ad;
+    box-sizing: border-box;
+    box-shadow: 0px 6px 12px rgba(126, 155, 129, 0.1);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 371px;
+    height: 173px;
+    p {
+      font-size: 15px;
+      line-height: 19px;
+      color: #227f00;
+      margin-bottom: 0;
+    }
+  }
+}
+
+button.ant-btn.ant-btn-default {
+  background: #227f00 !important;
+  border-radius: 10px;
+  width: 123px;
+  height: 45px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 19px;
+  color: #ffffff !important;
+}
+.ant-modal-footer {
+  button.ant-btn {
+    border: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 19px;
+    color: #227f00;
+  }
+}
+
+.ant-modal-mask {
+  background: linear-gradient(0deg, #d8f2db, #d8f2db),
+    linear-gradient(0deg, #d8f2db, #d8f2db),
+    linear-gradient(0deg, #d8f2db, #d8f2db), #d8f2db;
+  opacity: 0.3 !important;
+}
+
+.ant-modal-title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  color: #262626;
+}
+
+.ant-modal-body {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 19px;
+  color: #03363c;
+}
