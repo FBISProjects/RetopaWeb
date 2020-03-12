@@ -10,6 +10,7 @@ import {
   Tabs,
   Popover,
   Form,
+  Tooltip,
 } from "antd"
 import "../../scss/Table.scss"
 import { TableTwo } from "../../components/Constants/Tableone"
@@ -256,6 +257,9 @@ const RetailerList = () => {
       ...inputChange,
       [e.currentTarget.name]: e.currentTarget.value,
     })
+  }
+  const handleNumber = e => {
+    console.log(e.currentTarget.value)
   }
 
   // handle ussd activation Submit
@@ -676,11 +680,16 @@ const RetailerList = () => {
 
                   <div className="formInput VTUInput">
                     <label htmlFor="name">Number</label>
-                    <Input
-                      placeholder="23480********"
-                      name="phone"
-                      onChange={handleChange}
-                    />
+                    <Tooltip placement="topLeft" title="please start with 234">
+                      <Input
+                        maxLength={13}
+                        minLength={13}
+                        placeholder="23480********"
+                        name="phone"
+                        onChange={handleChange}
+                        type="tel"
+                      />
+                    </Tooltip>
                   </div>
                   <div className="formInput VTUInput">
                     <label htmlFor="name">Name</label>

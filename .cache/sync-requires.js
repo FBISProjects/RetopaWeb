@@ -5,7 +5,7 @@ const preferDefault = m => m && m.default || m
 
 
 exports.components = {
-  "component---node-modules-gatsby-plugin-offline-app-shell-js": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\node_modules\\gatsby-plugin-offline\\app-shell.js"))),
+  "component---cache-dev-404-page-js": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\.cache\\dev-404-page.js"))),
   "component---src-pages-404-js": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\404.js"))),
   "component---src-pages-airtime-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Airtime.jsx"))),
   "component---src-pages-contact-us-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\ContactUs.jsx"))),
