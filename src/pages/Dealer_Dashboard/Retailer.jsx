@@ -350,6 +350,7 @@ const RetailerList = () => {
         setLoading(false)
         setMessage(m)
         setTimeout(() => {
+          window.location.reload(false)
           setMessage("")
         }, 3000)
       } else {
