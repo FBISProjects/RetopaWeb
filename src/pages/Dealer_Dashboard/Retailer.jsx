@@ -112,10 +112,8 @@ const RetailerList = () => {
     const request = new Promise(res => {
       res(Instance.post("", req))
     })
-    //console.log(request)
     request.then(({ data }) => {
       if (data.status === "200") {
-        console.log(data.retailer)
         setRetailer(data.retailer)
       }
     })
@@ -179,6 +177,24 @@ const RetailerList = () => {
           </p>
         ),
     },
+    {
+      title: "USSD Status",
+      dataIndex: "ussd_status",
+      key: "ussd_status",
+
+      render: text =>
+        text === 1 ? (
+          <p className="enabled">
+            <Green className="dotPosition" />
+            Active
+          </p>
+        ) : (
+          <p className="disabled">
+            <Red className="dotPosition" />
+            Inactive
+          </p>
+        ),
+    },
     // {
     //   title: "Dealer",
     //   dataIndex: "d_id",
@@ -214,6 +230,18 @@ const RetailerList = () => {
               {/* <p>Edit</p> */}
               <p id={record.id} title={record.type} onClick={ActivateRetailer}>
                 {record.status === 1 ? "Deactivate POS" : "Activate POS"}
+              </p>
+              <p
+                id={record.id}
+                title={record.tp_id}
+                onClick={ActivateUSSD}
+                style={
+                  record.code === null
+                    ? { display: "none" }
+                    : { display: "block" }
+                }
+              >
+                {record.ussd_status === 1 ? "Deactivate USSD" : "Activate USSD"}
               </p>
               <p
                 id={record.id}
@@ -258,9 +286,6 @@ const RetailerList = () => {
       [e.currentTarget.name]: e.currentTarget.value,
     })
   }
-  const handleNumber = e => {
-    console.log(e.currentTarget.value)
-  }
 
   // handle ussd activation Submit
   const handleVTUSubmit = () => {
@@ -269,10 +294,8 @@ const RetailerList = () => {
       res(Instance.post("", inputChange))
     })
     submitRequest.then(({ data }) => {
-      //console.log(submitRequest)
       let fields = data.required_fields
       let m = data.message
-      //console.log(submitRequest)
       if (data.status === "301") {
         setLoading(false)
         setError(fields)
@@ -415,6 +438,91 @@ const RetailerList = () => {
     }
   }
   ////////////////////ACTIVTE RETAILER END////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  ////////////////////ACTIVTE USSD//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const ActivateUSSD = async e => {
+    let tp_id = e.currentTarget.title
+    let rt_id = e.target.id
+    let status = e.target.innerHTML
+    let { username } = activateRetailer
+    let { password } = activateRetailer
+    const Data = {
+      serviceCode: "RTAD",
+      username,
+      password,
+      rt_id,
+      type: "ACTIVATE",
+    }
+    const DataTwo = {
+      serviceCode: "RTAD",
+      username,
+      password,
+      rt_id,
+      type: "DEACTIVATE",
+    }
+    if (status === "Activate USSD") {
+      e.target.innerHTML = "Activating..."
+      const submitRequest = new Promise(res => {
+        res(Instance.post("", Data))
+      })
+      submitRequest.then(({ data }) => {
+        let m = data.message
+        if (data.status === "301") {
+          setLoading(false)
+          e.target.innerHTML = "Activate"
+          setTimeout(() => {
+            setError([])
+          }, 3000)
+        } else if (data.status === "200") {
+          setLoading(false)
+          setMessage(m)
+          setTimeout(() => {
+            setMessage("")
+            window.location.reload(false)
+          }, 3000)
+        } else {
+          setLoading(false)
+          setMessage(m)
+          e.target.innerHTML = "Activate"
+          setTimeout(() => {
+            setMessage("")
+          }, 3000)
+        }
+      })
+    } else if (status === "Deactivate USSD") {
+      e.target.innerHTML = "Deactivating..."
+      const submitRequest = new Promise(res => {
+        res(Instance.post("", DataTwo))
+      })
+      submitRequest.then(({ data }) => {
+        let fields = data.required_fields
+        let m = data.message
+        if (data.status === "301") {
+          setLoading(false)
+          setError(fields)
+          e.target.innerHTML = "Deactivate"
+          setTimeout(() => {
+            setError([])
+          }, 3000)
+        } else if (data.status === "200") {
+          setLoading(false)
+          setMessage(m)
+          setTimeout(() => {
+            setMessage("")
+            window.location.reload(false)
+          }, 3000)
+        } else {
+          setLoading(false)
+          setMessage(m)
+          e.target.innerHTML = "Deactivate"
+          setTimeout(() => {
+            setMessage("")
+          }, 3000)
+        }
+      })
+    }
+  }
+  ////////////////////ACTIVTE USSD END////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   ////////////////////SEND FUNDS TO RETAILER//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
