@@ -155,7 +155,9 @@ const Dealer_Home = () => {
                     <DealerActivities
                       title={data.title}
                       price={data.price}
-                      viewClicked={handleClicked}
+                      viewClicked={() => {
+                        navigateTo("../Dealer_Dashboard/ViewDetails")
+                      }}
                     />
                   )
                 })}
