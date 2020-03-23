@@ -85,12 +85,14 @@ const RetailerList = () => {
       serviceCode: "RTL",
       username: usernameA,
       password: passwordA,
-      user_id,
+      user_id: 1,
     }
 
     let UserData = localStorage.getItem("userData")
       ? JSON.parse(localStorage.getItem("userData"))
       : []
+
+    console.log(UserData)
 
     // inputs for adding vtu line
     setInput({
@@ -132,6 +134,7 @@ const RetailerList = () => {
       const request = new Promise(res => {
         res(AdminInstance.post("", req2))
       })
+      console.log(request)
       request.then(({ data }) => {
         if (data.status === "200") {
           setRetailer(data.retailer)
@@ -149,7 +152,6 @@ const RetailerList = () => {
       })
     }
   }, [])
-
   const ColumnsTwo = [
     {
       title: "Username",
@@ -735,7 +737,7 @@ const RetailerList = () => {
           <TabPane
             tab="Add Retailer"
             key="2"
-            className={type === "Admin" ? "hide" : ""}
+            disabled={type === "Admin" ? true : false}
           >
             <div className="formContainer">
               <div className="formTitle">
@@ -803,7 +805,7 @@ const RetailerList = () => {
           <TabPane
             tab="Activate USSD"
             key="3"
-            className={type === "Admin" ? "hide" : ""}
+            disabled={type === "Admin" ? true : false}
           >
             <div className="formContainer">
               <div className="formTitle">
