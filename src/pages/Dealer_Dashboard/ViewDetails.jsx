@@ -11,6 +11,7 @@ import { useSelector } from "react-redux"
 import { Link, navigateTo } from "gatsby"
 import Green from "../../../assets/green.svg"
 import Red from "../../../assets/red.svg"
+import axios from "axios"
 const { TabPane } = Tabs
 const { Option } = Select
 const Dash_history_icon = props => <Icon component={HistoryIcon} {...props} />
@@ -43,52 +44,78 @@ const ViewDetails = () => {
     const username = Base64.decode(data.TOKEN_ONE)
     const password = Base64.decode(data.TOKEN_TWO)
 
-    // total USSD
-    const ussdReqst = {
-      serviceCode: "RTRA",
-      username,
-      type: "USSD",
-      password,
+    // admin token
+    let dataA = sessionStorage.getItem("topup2")
+      ? JSON.parse(sessionStorage.getItem("topup2"))
+      : []
+    let usernameA = Base64.decode(dataA.TOKEN_ONE_ADMIN)
+    let passwordA = Base64.decode(dataA.TOKEN_TWO_ADMIN)
+
+    // get usaer type
+
+    let UserData = localStorage.getItem("userData")
+      ? JSON.parse(localStorage.getItem("userData"))
+      : []
+
+    if (UserData.type === "Admin") {
+      // total USSD
+      const ussdReqst = {
+        serviceCode: "RTRA",
+        username: usernameA,
+        type: "USSD",
+        password: passwordA,
+      }
+      const USSD = new Promise(res => {
+        res(
+          axios.post(
+            "https://retopin.com/retopa/public/api/admin_views",
+            ussdReqst
+          )
+        )
+      })
+      USSD.then(({ data }) => {
+        let UssdArry = data.transactions
+        setUssdData(UssdArry)
+      })
+      // total data
+      const DataReqst = {
+        serviceCode: "RTRA",
+        username: usernameA,
+        type: "DATA",
+        password: passwordA,
+      }
+      const Data = new Promise(res => {
+        res(
+          axios.post(
+            "https://retopin.com/retopa/public/api/admin_views",
+            DataReqst
+          )
+        )
+      })
+      Data.then(({ data }) => {
+        let DataArry = data.details
+        setData(DataArry)
+      })
+      // total voucher
+      const VoucherReqst = {
+        serviceCode: "RTRA",
+        username: usernameA,
+        type: "VOUCHER",
+        password: passwordA,
+      }
+      const VOUCHER = new Promise(res => {
+        res(
+          axios.post(
+            "https://retopin.com/retopa/public/api/admin_views",
+            VoucherReqst
+          )
+        )
+      })
+      VOUCHER.then(({ data }) => {
+        let VoucherArry = data.details
+        setVoucher(VoucherArry)
+      })
     }
-    const USSD = new Promise(res => {
-      res(Instance.post("", ussdReqst))
-    })
-    USSD.then(({ data }) => {
-      let UssdArry = data.balance
-      let sum = UssdArry.reduce(function(total, currentValue) {
-        return total + currentValue.amount
-      }, 0)
-      setUssdData(UssdArry)
-    })
-    // total data
-    const DataReqst = {
-      serviceCode: "RTRA",
-      username,
-      type: "DATA",
-      password,
-    }
-    const Data = new Promise(res => {
-      res(Instance.post("", DataReqst))
-    })
-    Data.then(({ data }) => {
-      let DataArry = data.details
-      console.log(DataArry)
-      setData(DataArry)
-    })
-    // total voucher
-    const VoucherReqst = {
-      serviceCode: "RTRA",
-      username,
-      type: "VOUCHER",
-      password,
-    }
-    const VOUCHER = new Promise(res => {
-      res(Instance.post("", VoucherReqst))
-    })
-    VOUCHER.then(({ data }) => {
-      let VoucherArry = data.details
-      setVoucher(VoucherArry)
-    })
   }, [])
 
   const HistoryColumn = [

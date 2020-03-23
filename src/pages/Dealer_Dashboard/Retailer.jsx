@@ -112,8 +112,10 @@ const RetailerList = () => {
     const request = new Promise(res => {
       res(Instance.post("", req))
     })
+    console.log(request)
     request.then(({ data }) => {
       if (data.status === "200") {
+        console.log(data.retailer)
         setRetailer(data.retailer)
       }
     })
@@ -144,6 +146,14 @@ const RetailerList = () => {
       title: "Retailer number",
       dataIndex: "phone",
       key: "phone",
+    },
+    {
+      title: "Wallet ballance",
+      dataIndex: "balance",
+      key: "balance",
+      render: (text, record) => (
+        <div>{`₦ ${parseInt(record.balance).toLocaleString()}`}</div>
+      ),
     },
 
     {

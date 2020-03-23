@@ -21,6 +21,7 @@ exports.components = {
   "component---src-pages-dealer-dashboard-settings-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Dealer_Dashboard\\Settings.jsx"))),
   "component---src-pages-dealer-dashboard-sub-dealer-list-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Dealer_Dashboard\\SubDealer_List.jsx"))),
   "component---src-pages-dealer-dashboard-sub-dealers-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Dealer_Dashboard\\SubDealers.jsx"))),
+  "component---src-pages-dealer-dashboard-view-details-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Dealer_Dashboard\\ViewDetails.jsx"))),
   "component---src-pages-dealer-dashboard-voucher-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Dealer_Dashboard\\Voucher.jsx"))),
   "component---src-pages-dealer-dashboard-wallet-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Dealer_Dashboard\\Wallet.jsx"))),
   "component---src-pages-faq-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\FAQ.jsx"))),
@@ -49,6 +50,6 @@ exports.components = {
   "component---src-pages-user-dashboard-user-billing-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\User_Dashboard\\User_billing.jsx"))),
   "component---src-pages-user-dashboard-user-home-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\User_Dashboard\\User_Home.jsx"))),
   "component---src-pages-user-dashboard-user-payment-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\User_Dashboard\\User_Payment.jsx"))),
-  "component---src-pages-dealer-dashboard-view-details-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Dealer_Dashboard\\ViewDetails.jsx")))
+  "component---src-pages-dealer-dashboard-transactions-jsx": hot(preferDefault(require("D:\\YU\\Documents\\retopaWeb\\src\\pages\\Dealer_Dashboard\\Transactions.jsx")))
 }
 

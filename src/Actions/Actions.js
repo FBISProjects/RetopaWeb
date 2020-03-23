@@ -12,7 +12,9 @@ const {
   CLEAR,
   RETAILER,
   LOGIN_DEALER,
+  LOGIN_ADMIN,
   LOGIN_SUCCESS_DEALER,
+  LOGIN_SUCCESS_ADMIN,
 } = actionType
 
 export const registerUser = payload => ({
@@ -36,6 +38,10 @@ export const DealerLogin = payload => ({
   type: LOGIN_DEALER,
   payload,
 })
+export const AdminLogin = payload => ({
+  type: LOGIN_ADMIN,
+  payload,
+})
 
 export const loginError = payload => ({
   type: LOGIN_ERROR,
@@ -51,6 +57,10 @@ export const loginSuccess = payload => ({
 })
 export const loginDealerSuccess = payload => ({
   type: LOGIN_SUCCESS_DEALER,
+  payload,
+})
+export const adminDealerSuccess = payload => ({
+  type: LOGIN_SUCCESS_ADMIN,
   payload,
 })
 export const openTokenForm = payload => ({

@@ -18,6 +18,7 @@ exports.components = {
   "component---src-pages-dealer-dashboard-settings-jsx": () => import("../src/pages/Dealer_Dashboard/Settings.jsx" /* webpackChunkName: "component---src-pages-dealer-dashboard-settings-jsx" */),
   "component---src-pages-dealer-dashboard-sub-dealer-list-jsx": () => import("../src/pages/Dealer_Dashboard/SubDealer_List.jsx" /* webpackChunkName: "component---src-pages-dealer-dashboard-sub-dealer-list-jsx" */),
   "component---src-pages-dealer-dashboard-sub-dealers-jsx": () => import("../src/pages/Dealer_Dashboard/SubDealers.jsx" /* webpackChunkName: "component---src-pages-dealer-dashboard-sub-dealers-jsx" */),
+  "component---src-pages-dealer-dashboard-view-details-jsx": () => import("../src/pages/Dealer_Dashboard/ViewDetails.jsx" /* webpackChunkName: "component---src-pages-dealer-dashboard-view-details-jsx" */),
   "component---src-pages-dealer-dashboard-voucher-jsx": () => import("../src/pages/Dealer_Dashboard/Voucher.jsx" /* webpackChunkName: "component---src-pages-dealer-dashboard-voucher-jsx" */),
   "component---src-pages-dealer-dashboard-wallet-jsx": () => import("../src/pages/Dealer_Dashboard/Wallet.jsx" /* webpackChunkName: "component---src-pages-dealer-dashboard-wallet-jsx" */),
   "component---src-pages-faq-jsx": () => import("../src/pages/FAQ.jsx" /* webpackChunkName: "component---src-pages-faq-jsx" */),
@@ -46,6 +47,6 @@ exports.components = {
   "component---src-pages-user-dashboard-user-billing-jsx": () => import("../src/pages/User_Dashboard/User_billing.jsx" /* webpackChunkName: "component---src-pages-user-dashboard-user-billing-jsx" */),
   "component---src-pages-user-dashboard-user-home-jsx": () => import("../src/pages/User_Dashboard/User_Home.jsx" /* webpackChunkName: "component---src-pages-user-dashboard-user-home-jsx" */),
   "component---src-pages-user-dashboard-user-payment-jsx": () => import("../src/pages/User_Dashboard/User_Payment.jsx" /* webpackChunkName: "component---src-pages-user-dashboard-user-payment-jsx" */),
-  "component---src-pages-dealer-dashboard-view-details-jsx": () => import("../src/pages/Dealer_Dashboard/ViewDetails.jsx" /* webpackChunkName: "component---src-pages-dealer-dashboard-view-details-jsx" */)
+  "component---src-pages-dealer-dashboard-transactions-jsx": () => import("../src/pages/Dealer_Dashboard/Transactions.jsx" /* webpackChunkName: "component---src-pages-dealer-dashboard-transactions-jsx" */)
 }
 
