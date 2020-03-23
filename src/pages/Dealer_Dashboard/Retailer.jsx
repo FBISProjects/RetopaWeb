@@ -27,6 +27,7 @@ import { RetailIcon } from "../../components/CustomIcons"
 import { Link, navigateTo } from "gatsby"
 import { retailerDetails } from "../../Actions/Actions"
 import { array } from "prop-types"
+import AdminInstance from "../../Api/AdminInstance"
 const Dash_retail_icon = props => <Icon component={RetailIcon} {...props} />
 
 const { TabPane } = Tabs
@@ -43,6 +44,7 @@ const RetailerList = () => {
   const [name, setName] = useState("")
   const [sorted, setSorted] = useState([])
   const [filterText, setFilterText] = useState("")
+  const [type, setType] = useState("")
   const [activateRetailer, setActivateRetailer] = useState({
     serviceCode: "ACT",
   })
@@ -72,7 +74,23 @@ const RetailerList = () => {
       : []
     const username = Base64.decode(data.TOKEN_ONE)
     const password = Base64.decode(data.TOKEN_TWO)
+
+    let data2 = sessionStorage.getItem("topup2")
+      ? JSON.parse(sessionStorage.getItem("topup2"))
+      : []
+    const usernameA = Base64.decode(data2.TOKEN_ONE_ADMIN)
+    const passwordA = Base64.decode(data2.TOKEN_TWO_ADMIN)
     const req = { serviceCode: "RTL", username, password, user_id }
+    const req2 = {
+      serviceCode: "RTL",
+      username: usernameA,
+      password: passwordA,
+      user_id,
+    }
+
+    let UserData = localStorage.getItem("userData")
+      ? JSON.parse(localStorage.getItem("userData"))
+      : []
 
     // inputs for adding vtu line
     setInput({
@@ -108,17 +126,28 @@ const RetailerList = () => {
       user_id,
     })
 
-    // request for retailer list
-    const request = new Promise(res => {
-      res(Instance.post("", req))
-    })
-    console.log(request)
-    request.then(({ data }) => {
-      if (data.status === "200") {
-        console.log(data.retailer)
-        setRetailer(data.retailer)
-      }
-    })
+    if (UserData.type === "Admin") {
+      setType("Admin")
+      // request for retailer list
+      const request = new Promise(res => {
+        res(AdminInstance.post("", req2))
+      })
+      request.then(({ data }) => {
+        if (data.status === "200") {
+          setRetailer(data.retailer)
+        }
+      })
+    } else {
+      // request for retailer list
+      const request = new Promise(res => {
+        res(Instance.post("", req))
+      })
+      request.then(({ data }) => {
+        if (data.status === "200") {
+          setRetailer(data.retailer)
+        }
+      })
+    }
   }, [])
 
   const ColumnsTwo = [
@@ -703,7 +732,11 @@ const RetailerList = () => {
               </div>
             </div>
           </TabPane>
-          <TabPane tab="Add Retailer" key="2">
+          <TabPane
+            tab="Add Retailer"
+            key="2"
+            className={type === "Admin" ? "hide" : ""}
+          >
             <div className="formContainer">
               <div className="formTitle">
                 <p>Add Retailer</p>
@@ -767,7 +800,11 @@ const RetailerList = () => {
               </div>
             </div>
           </TabPane>
-          <TabPane tab="Activate USSD" key="3">
+          <TabPane
+            tab="Activate USSD"
+            key="3"
+            className={type === "Admin" ? "hide" : ""}
+          >
             <div className="formContainer">
               <div className="formTitle">
                 <p>Activate USSD</p>

@@ -20,6 +20,7 @@ import Red from "../../../assets/red.svg"
 import { AdminMember } from "../../components/Constants/AdminPage"
 import DealerLayout from "../../components/Layout/DealerLayout"
 import axios from "axios"
+import AdminInstance from "../../Api/AdminInstance"
 const { TabPane } = Tabs
 const Dash_admin_icon = props => <Icon component={AdminIcon} {...props} />
 
@@ -51,9 +52,7 @@ const Admin = () => {
       password,
     }
     const tp = new Promise(res => {
-      res(
-        axios.post("https://retopin.com/retopa/public/api/admin_views", tpReqst)
-      )
+      res(AdminInstance.post("", tpReqst))
     })
     tp.then(({ data }) => {
       let Arry = data.tp_details

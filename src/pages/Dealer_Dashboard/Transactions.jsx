@@ -10,6 +10,7 @@ import DealerLayout from "../../components/Layout/DealerLayout"
 import { HistoryIcon } from "../../components/CustomIcons"
 import axios from "axios"
 import { DatePicker } from "antd"
+import AdminInstance from "../../Api/AdminInstance"
 const { RangePicker } = DatePicker
 const { TabPane } = Tabs
 const { Option } = Select
@@ -49,9 +50,7 @@ const Transactions = () => {
       password,
     }
     const request = new Promise(res => {
-      res(
-        axios.post("https://retopin.com/retopa/public/api/admin_views", search)
-      )
+      res(AdminInstance.post("", search))
     })
     request.then(({ data }) => {
       console.log(data)
@@ -173,9 +172,7 @@ const Transactions = () => {
       password: dets[1],
     }
     const request = new Promise(res => {
-      res(
-        axios.post("https://retopin.com/retopa/public/api/admin_views", search)
-      )
+      res(AdminInstance.post("", search))
     })
     request.then(({ data }) => {
       if (data.status === "200") {

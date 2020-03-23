@@ -12,6 +12,7 @@ import { Link, navigateTo } from "gatsby"
 import Green from "../../../assets/green.svg"
 import Red from "../../../assets/red.svg"
 import axios from "axios"
+import AdminInstance from "../../Api/AdminInstance"
 const { TabPane } = Tabs
 const { Option } = Select
 const Dash_history_icon = props => <Icon component={HistoryIcon} {...props} />
@@ -66,12 +67,7 @@ const ViewDetails = () => {
         password: passwordA,
       }
       const USSD = new Promise(res => {
-        res(
-          axios.post(
-            "https://retopin.com/retopa/public/api/admin_views",
-            ussdReqst
-          )
-        )
+        res(AdminInstance.post("", ussdReqst))
       })
       USSD.then(({ data }) => {
         let UssdArry = data.transactions
@@ -85,12 +81,7 @@ const ViewDetails = () => {
         password: passwordA,
       }
       const Data = new Promise(res => {
-        res(
-          axios.post(
-            "https://retopin.com/retopa/public/api/admin_views",
-            DataReqst
-          )
-        )
+        res(AdminInstance.post("", DataReqst))
       })
       Data.then(({ data }) => {
         let DataArry = data.details
@@ -104,12 +95,7 @@ const ViewDetails = () => {
         password: passwordA,
       }
       const VOUCHER = new Promise(res => {
-        res(
-          axios.post(
-            "https://retopin.com/retopa/public/api/admin_views",
-            VoucherReqst
-          )
-        )
+        res(AdminInstance.post("", VoucherReqst))
       })
       VOUCHER.then(({ data }) => {
         let VoucherArry = data.details

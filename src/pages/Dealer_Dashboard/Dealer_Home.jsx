@@ -12,6 +12,7 @@ import { Base64 } from "js-base64"
 import DealerLayout from "../../components/Layout/DealerLayout"
 import { Link, navigateTo } from "gatsby"
 import axios from "axios"
+import AdminInstance from "../../Api/AdminInstance"
 
 const Dealer_Home = () => {
   const [retailer, setRetailer] = useState([])
@@ -87,12 +88,7 @@ const Dealer_Home = () => {
       }
 
       const USSD = new Promise(res => {
-        res(
-          axios.post(
-            "https://retopin.com/retopa/public/api/admin_views",
-            ussdReqst
-          )
-        )
+        res(AdminInstance.post("", ussdReqst))
       })
       USSD.then(({ data }) => {
         let UssdAmount = data.totalamount
@@ -106,12 +102,7 @@ const Dealer_Home = () => {
         password: passwordA,
       }
       const Data = new Promise(res => {
-        res(
-          axios.post(
-            "https://retopin.com/retopa/public/api/admin_views",
-            DataReqst
-          )
-        )
+        res(AdminInstance.post("", DataReqst))
       })
       Data.then(({ data }) => {
         console.log(data)
@@ -126,12 +117,7 @@ const Dealer_Home = () => {
         password: passwordA,
       }
       const VOUCHER = new Promise(res => {
-        res(
-          axios.post(
-            "https://retopin.com/retopa/public/api/admin_views",
-            VoucherReqst
-          )
-        )
+        res(AdminInstance.post("", VoucherReqst))
       })
       VOUCHER.then(({ data }) => {
         let VoucherData = data.totalamount

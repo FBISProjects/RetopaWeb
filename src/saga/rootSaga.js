@@ -8,6 +8,9 @@ import {
   eventChannel,
 } from "redux-saga/effects"
 import Instance from "../Api/Instance"
+import TradePatnerLogin from "../Api/TradePatnerLogin"
+import DealerLoginInstance from "../Api/DealerLoginInstance"
+import AdminLoginInstance from "../Api/AdminLoginInstance"
 // import { actionType } from "../actions/ActionType"
 import {
   registrationSuccess,
@@ -47,10 +50,7 @@ function* registerUsers({ payload }) {
 
 function* userLogin({ payload }) {
   try {
-    const request = yield axios.post(
-      "https://retopin.com/retopa/public/api/tp_login",
-      payload
-    )
+    const request = yield TradePatnerLogin.post("", payload)
     // //console.log(request)
     // return false
     let s = request.data.status
@@ -82,10 +82,7 @@ function* userLogin({ payload }) {
 }
 function* dealerLogin({ payload }) {
   try {
-    const request = yield axios.post(
-      "https://retopin.com/retopa/public/api/d_login",
-      payload
-    )
+    const request = yield DealerLoginInstance.post("", payload)
     let s = request.data.status
     let d = request.data
     let ae = request.data.message
@@ -115,10 +112,7 @@ function* dealerLogin({ payload }) {
 }
 function* adminLogin({ payload }) {
   try {
-    const request = yield axios.post(
-      "https://retopin.com/retopa/public/api/admin_login",
-      payload
-    )
+    const request = yield AdminLoginInstance.post("", payload)
     let s = request.data.status
     let d = request.data
     let ae = request.data.message
