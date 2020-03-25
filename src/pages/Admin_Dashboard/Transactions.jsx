@@ -24,6 +24,7 @@ const Transactions = () => {
   const [date, setDate] = useState([])
   const [dets, setDets] = useState([])
   const [loading, setloading] = useState(false)
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     let onLogged = sessionStorage.getItem("persist:root")
@@ -41,23 +42,6 @@ const Transactions = () => {
     const password = Base64.decode(data.TOKEN_TWO_ADMIN)
 
     setDets([...dets, username, password])
-
-    const search = {
-      serviceCode: "SEARCH",
-      //   from_date: "2019-06-14 09:06:03",
-      //   to_date: "2019-06-14 17:28:45",
-      username,
-      password,
-    }
-    const request = new Promise(res => {
-      res(AdminInstance.post("", search))
-    })
-    request.then(({ data }) => {
-      console.log(data)
-      if (data.status === "200") {
-        setHistory(data.transactions)
-      }
-    })
   }, [])
 
   //   id: 14
@@ -184,8 +168,29 @@ const Transactions = () => {
     })
   }
 
+  const handleSearch = e => {
+    setSearch(e.currentTarget.value)
+    const QuerySearch = {
+      serviceCode: "SEARCH",
+      search,
+      username: dets[0],
+      password: dets[1],
+    }
+    const request = new Promise(res => {
+      res(AdminInstance.post("", QuerySearch))
+    })
+    request.then(({ data }) => {
+      if (data.status === "200") {
+        setloading(false)
+        setHistory(data.transactions)
+      } else {
+        setloading(false)
+      }
+    })
+  }
+
   return (
-    <AdminLayout title={title} position={["10"]}>
+    <div title={title} position={["10"]}>
       <div>
         <div
           className="table_container"
@@ -218,10 +223,8 @@ const Transactions = () => {
                   <div className="searchTable">
                     <Input
                       placeholder="Search Transactions…"
-                      value={filteredCredit}
-                      onChange={e => {
-                        setFilteredCredit(e.target.value)
-                      }}
+                      value={search}
+                      onChange={handleSearch}
                       prefix={
                         <Icon type="search" style={{ color: "#D8D8D8" }} />
                       }
@@ -239,7 +242,7 @@ const Transactions = () => {
           </Tabs>
         </div>
       </div>
-    </AdminLayout>
+    </div>
   )
 }
 

@@ -4,6 +4,7 @@ import { navigate } from "gatsby"
 import { Icon } from "antd"
 import { HomeIcon } from "../../components/CustomIcons"
 import AdminLayout from "../../components/Layout/AdminLayout"
+import Transactions from "./Transactions"
 const Dash_home_icon = props => <Icon component={HomeIcon} {...props} />
 const Home = React.lazy(() => import("./Home"))
 
@@ -39,7 +40,7 @@ const Dashboard = () => {
     <div className={!logged ? "hide" : ""}>
       <AdminLayout title={title} position={["1"]}>
         <Suspense fallback={<h1>Loading...</h1>}>
-          {admintype === "adminB" ? "cannot view this page" : <Home />}
+          {admintype === "adminB" ? <Transactions /> : <Home />}
         </Suspense>
       </AdminLayout>
     </div>

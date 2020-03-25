@@ -140,105 +140,30 @@ const AdminLayout = ({
           <span>{user.username === undefined ? "ADMIN" : user.username}</span>
         </div>
         <Menu mode="inline" defaultSelectedKeys={position}>
-          <Menu.Item
-            key="1"
-            onClick={() => {
-              navigateTo("/Admin_Dashboard/Dashboard")
-            }}
-            className={type === "adminB" ? "hide" : ""}
-          >
-            <Dash_home_icon />
-            <span className="nav-text">Home</span>
-          </Menu.Item>
+          {type === "adminA" ? (
+            <Menu.Item
+              key="1"
+              onClick={() => {
+                navigateTo("/Admin_Dashboard/Dashboard")
+              }}
+              className={type === "adminB" ? "hide" : ""}
+            >
+              <Dash_home_icon />
+              <span className="nav-text">Home</span>
+            </Menu.Item>
+          ) : (
+            <Menu.Item
+              key="1"
+              onClick={() => {
+                navigateTo("/Admin_Dashboard/Transactions")
+              }}
+              className={type === "adminB" ? "" : "hide "}
+            >
+              <Dash_history_icon />
+              <span className="nav-text">Transactions</span>
+            </Menu.Item>
+          )}
 
-          {/* <Menu.Item
-            key="8"
-            onClick={() => {
-              navigateTo("/Dealer_Dashboard/Admin")
-            }}
-            className={userA.type === "Admin" ? "" : "hide"}
-          >
-            <Dash_admin_icon />
-            <span className="nav-text">Trade Partners</span>
-          </Menu.Item> */}
-          {/* <Menu.Item
-            key="2"
-            onClick={() => {
-              navigateTo("/Dealer_Dashboard/Retailer")
-            }}
-          >
-            <Dash_airtime_icon />
-            <span className="nav-text">Retailer</span>
-          </Menu.Item> */}
-          {/* <Menu.Item
-            key="9"
-            onClick={() => {
-              navigateTo("/Dealer_Dashboard/SubDealers")
-            }}
-            className={userA.type === "Admin" ? "hide" : ""}
-          >
-            <Dash_airtime_icon />
-            <span className="nav-text">Sub Dealers</span>
-          </Menu.Item> */}
-          {/* <Menu.Item
-            key="3"
-            onClick={() => {
-              navigateTo("/Dealer_Dashboard/Wallet")
-            }}
-            className={userA.type === "Admin" ? "hide" : ""}
-          >
-            <Dash_bill_icon />
-            <span className="nav-text">Wallet</span>
-          </Menu.Item> */}
-          {/* <Menu.Item
-            key="4"
-            onClick={() => {
-              navigateTo("/Dealer_Dashboard/Voucher")
-            }}
-            className={userA.type === "Admin" ? "hide" : ""}
-          >
-            <Dash_voucher_icon />
-            <span className="nav-text">Voucher</span>
-          </Menu.Item> */}
-          {/* <Menu.Item
-            key="5"
-            onClick={() => {
-              navigateTo("/Dealer_Dashboard/History")
-            }}
-            className={userA.type === "Admin" ? "hide" : ""}
-          >
-            <Dash_history_icon />
-            <span className="nav-text">History</span>
-          </Menu.Item> */}
-          <Menu.Item
-            key="2"
-            onClick={() => {
-              navigateTo("/Admin_Dashboard/Transactions")
-            }}
-            className={type === "adminB" ? "" : "hide "}
-          >
-            <Dash_history_icon />
-            <span className="nav-text">Transactions</span>
-          </Menu.Item>
-          {/* <Menu.Item
-            key="6"
-            onClick={() => {
-              navigateTo("/Dealer_Dashboard/Payment")
-            }}
-            className={userA.type === "Admin" ? "hide" : ""}
-          >
-            <Dash_payment_icon />
-            <span className="nav-text">Payment</span>
-          </Menu.Item> */}
-          {/* <Menu.Item
-            key="9"
-            onClick={() => {
-              navigateTo("/Dealer_Dashboard/Export")
-            }}
-          >
-            <Dash_export_icon />
-            <span className="nav-text">Export Data</span>
-          </Menu.Item> */}
           <Menu.Item key="7" onClick={handleLogout}>
             <Dash_logout_icon />
             <span className="nav-text">Logout</span>
