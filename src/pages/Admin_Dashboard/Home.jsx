@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import {
   topCardDetails,
   Dealer_Activities,
@@ -13,20 +14,29 @@ import DealerLayout from "../../components/Layout/DealerLayout"
 import { Link, navigateTo } from "gatsby"
 import axios from "axios"
 import AdminInstance from "../../Api/AdminInstance"
+import { dispatchTransactions } from "../../Actions/Actions"
 const { RangePicker } = DatePicker
 const { Option } = Select
 
-const Dealer_Home = () => {
+const Home = () => {
   const [retailer, setRetailer] = useState([])
-  const [user, setUser] = useState({})
+  const [vtu, setVtu] = useState("0")
+  const [vtuData, setVtuData] = useState([])
   const [counter, setCounter] = useState("0")
   const [ussd, setUssd] = useState("0")
   const [ussdData, setUssdData] = useState([])
   const [data, setData] = useState("0")
+  const [dataData, setDataData] = useState([])
   const [voucher, setVoucher] = useState("0")
+  const [voucherData, setVoucherData] = useState([])
   const [type, setType] = useState("")
   const [tps, setTps] = useState([])
   const [date, setDate] = useState([])
+  const [dets, setDets] = useState([])
+  const [tp_id, setTp_id] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     //gets user details
@@ -43,47 +53,16 @@ const Dealer_Home = () => {
       ? JSON.parse(localStorage.getItem("userData"))
       : []
 
-    // gets tokens
-    let data = sessionStorage.getItem("topup")
-      ? JSON.parse(sessionStorage.getItem("topup"))
-      : []
-    let username = Base64.decode(data.TOKEN_ONE)
-    let password = Base64.decode(data.TOKEN_TWO)
-
     // admin token
     let dataA = sessionStorage.getItem("topup2")
       ? JSON.parse(sessionStorage.getItem("topup2"))
       : []
     let usernameA = Base64.decode(dataA.TOKEN_ONE_ADMIN)
     let passwordA = Base64.decode(dataA.TOKEN_TWO_ADMIN)
-    const req = { serviceCode: "RTL", username, password, user_id }
-
-    // request for retailer list
-    const request = new Promise(res => {
-      res(Instance.post("", req))
-    })
-    request.then(({ data }) => {
-      if (data.status === "200") {
-        setRetailer(data.retailer)
-      }
-    })
-
-    const reqs = { serviceCode: "SHP", username, password, user_id: "1" }
-    const profile = new Promise(res => {
-      res(Instance.post("", reqs))
-    })
-    profile.then(({ data }) => {
-      let user = data.user
-      console.log(user)
-      if (user === undefined) {
-        return false
-      } else {
-        setUser(user)
-        setCounter(user.counter)
-      }
-    })
+    setDets([...dets, usernameA, passwordA])
 
     if (UserData.type === "Admin") {
+      setLoading(true)
       // trade Partners
       const tpReqst = {
         serviceCode: "TRAL",
@@ -94,6 +73,7 @@ const Dealer_Home = () => {
         res(AdminInstance.post("", tpReqst))
       })
       tp.then(({ data }) => {
+        setLoading(false)
         let Arry = data.tp_details
         setTps(Arry)
       })
@@ -112,6 +92,7 @@ const Dealer_Home = () => {
       })
       USSD.then(({ data }) => {
         let UssdAmount = data.totalamount
+        setUssdData(data.transactions)
         setUssd(`₦ ${UssdAmount.toLocaleString()}`)
       })
       // total data
@@ -125,8 +106,8 @@ const Dealer_Home = () => {
         res(AdminInstance.post("", DataReqst))
       })
       Data.then(({ data }) => {
-        console.log(data)
         let DataAmount = data.totalamount
+        setDataData(data.details)
         setData(`₦ ${DataAmount.toLocaleString()}`)
       })
       // total voucher
@@ -143,78 +124,44 @@ const Dealer_Home = () => {
         let VoucherData = data.totalamount
         setVoucher(`₦ ${VoucherData.toLocaleString()}`)
         setCounter(data.details.length)
+        setVoucherData(data.details)
       })
-    } else {
-      // total USSD
-      const ussdReqst = {
-        serviceCode: "RTRA",
-        username,
-        type: "USSD",
-        password,
-      }
-      const USSD = new Promise(res => {
-        res(Instance.post("", ussdReqst))
-      })
-      console.log(ussdReqst)
-      USSD.then(({ data }) => {
-        let UssdAmt = data.totalamount
-        setUssd(`₦ ${UssdAmt.toLocaleString()}`)
-      })
-      // total data
-      const DataReqst = {
-        serviceCode: "RTRA",
-        username,
-        type: "DATA",
-        password,
-      }
-      const Data = new Promise(res => {
-        res(Instance.post("", DataReqst))
-      })
-      Data.then(({ data }) => {
-        let DataAmt = data.totalamount
-
-        setData(`₦ ${DataAmt.toLocaleString()}`)
-      })
-      // total voucher
-      const VoucherReqst = {
-        serviceCode: "RTRA",
-        username,
-        type: "VOUCHER",
-        password,
-      }
-      const VOUCHER = new Promise(res => {
-        res(Instance.post("", VoucherReqst))
-      })
-      VOUCHER.then(({ data }) => {
-        let VoucherAmt = data.totalamount
-        setCounter(data.details.length)
-        setVoucher(`₦ ${VoucherAmt.toLocaleString()}`)
-      })
-      // something....
-      const RetailerReqst = {
-        serviceCode: "TRAL",
-        username,
-        type: "VOUCHER",
-        password,
-      }
-      const rtail = new Promise(res => {
-        res(Instance.post("", RetailerReqst))
-      })
-      rtail.then(({ data }) => {
-        console.log(data)
-        return
-        let VoucherArry = data.details
-        let sum = VoucherArry.reduce(function(total, currentValue) {
-          let newValue = parseInt(currentValue.amount)
-          return total + newValue
-        }, 0)
-        setVoucher(`₦ ${sum.toLocaleString()}`)
-      })
+      let DataAmt = data.totalamount
     }
   }, [])
 
   function onChange(value, dateString) {
-    setDate(dateString)
+    let selectedDate = dateString
+    const query = {
+      serviceCode: "DATA",
+      username: dets[0],
+      password: dets[1],
+      tp_id,
+    }
+    // total USSD
+    const ussdReqst = {
+      serviceCode: "SEARCH_tp",
+      username: dets[0],
+      password: dets[1],
+      tp_id,
+      from_date: selectedDate[0],
+      to_date: selectedDate[1],
+    }
+
+    const USSD = new Promise(res => {
+      res(AdminInstance.post("", ussdReqst))
+    })
+    USSD.then(({ data }) => {
+      console.log(data)
+      setUssdData(data.ussd_details)
+      setUssd(`₦ ${data.totalussd.toLocaleString()}`)
+      setDataData(data.data_details)
+      setData(`₦ ${data.total_data.toLocaleString()}`)
+      setVoucher(`₦ ${data.totalVoucher.toLocaleString()}`)
+      setVoucherData(data.voucher_details)
+      setVtu(`₦ ${data.total_vtu.toLocaleString()}`)
+      setVtuData(data.vtu_details)
+    })
   }
 
   const Dealer_Activity = [
@@ -225,6 +172,13 @@ const Dealer_Home = () => {
     { title: "Total bills payment transaction", price: " ₦ 0" },
     { title: "This month transaction", price: "₦ 0" },
   ]
+
+  let transactionViews = { ussdData, dataData, voucherData }
+
+  const viewClick = () => {
+    dispatch(dispatchTransactions(transactionViews))
+    navigateTo("/Admin_Dashboard/Transaction_Details")
+  }
 
   return (
     <>
@@ -251,10 +205,16 @@ const Dealer_Home = () => {
                 <label style={{ color: "#227f00", padding: "10px 0px" }}>
                   Select Trade Partner:
                 </label>
-                <Select defaultValue="All Trade Partner">
+                <Select
+                  defaultValue="All Trade Partner"
+                  onChange={value => {
+                    setTp_id(value)
+                  }}
+                  loading={loading}
+                >
                   {tps.map(data => {
                     return (
-                      <Option key={data.vendor_name} value={data.name}>
+                      <Option key={data.vendor_name} value={data.id}>
                         {data.name}
                       </Option>
                     )
@@ -281,9 +241,7 @@ const Dealer_Home = () => {
                     <DealerActivities
                       title={data.title}
                       price={data.price}
-                      viewClicked={() => {
-                        navigateTo("/Dealer_Dashboard/ViewDetails")
-                      }}
+                      viewClicked={viewClick}
                     />
                   )
                 })}
@@ -296,4 +254,4 @@ const Dealer_Home = () => {
   )
 }
 
-export default Dealer_Home
+export default Home

@@ -96,30 +96,30 @@ const Transactions = () => {
     // },
 
     {
+      title: "Retailer code",
+      dataIndex: "retailer_code",
+      key: "retailer_code",
+    },
+    {
+      title: "Name",
+      dataIndex: "retailer_name",
+      key: "retailer_name",
+    },
+    {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
     },
-    {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
-    },
-    {
-      title: "Unit",
-      dataIndex: "unit",
-      key: "unit",
-    },
 
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
     },
     {
-      title: "Batch ID",
-      dataIndex: "batch_id",
-      key: "batch_id",
+      title: "Phone Number",
+      dataIndex: "phone",
+      key: "phone",
     },
     {
       title: "Created at",
@@ -175,6 +175,7 @@ const Transactions = () => {
       res(AdminInstance.post("", search))
     })
     request.then(({ data }) => {
+      console.log(data)
       if (data.status === "200") {
         setloading(false)
         setHistory(data.transactions)

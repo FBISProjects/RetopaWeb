@@ -15,6 +15,7 @@ const {
   LOGIN_ADMIN,
   LOGIN_SUCCESS_DEALER,
   LOGIN_SUCCESS_ADMIN,
+  TRANSACTIONS,
 } = actionType
 
 export const registerUser = payload => ({
@@ -71,5 +72,9 @@ export const clearError = payload => ({
 })
 export const retailerDetails = payload => ({
   type: RETAILER,
+  payload,
+})
+export const dispatchTransactions = payload => ({
+  type: TRANSACTIONS,
   payload,
 })

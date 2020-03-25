@@ -17,6 +17,7 @@ const {
   RETAILER,
   LOGIN_SUCCESS_DEALER,
   LOGIN_SUCCESS_ADMIN,
+  TRANSACTIONS,
 } = actionType
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
   tripDetsTwo: {},
   retailer: {},
   type: "",
+  transactions: {},
 }
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -105,7 +107,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       let load = payload
       const dataAdmin = { ...load, type: "Admin", username: "ADMIN" }
       localStorage.setItem("userData", JSON.stringify(dataAdmin))
-      window.location = "/Dealer_Dashboard/Dashboard/"
+      window.location = "/Admin_Dashboard/Dashboard/"
       return {
         ...state,
         userData: payload,
@@ -116,6 +118,8 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       }
     case RETAILER:
       return { ...state, retailer: payload }
+    case TRANSACTIONS:
+      return { ...state, transactions: payload }
 
     default:
       return state
