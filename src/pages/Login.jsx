@@ -6,8 +6,8 @@ import LoginCard from "../components/LoginCard"
 import { UserLogin, DealerLogin, AdminLogin } from "../Actions/Actions"
 
 const Login = () => {
-  const [active, setActive] = useState(true)
-  const [active2, setActive2] = useState(false)
+  const [active, setActive] = useState(false)
+  const [active2, setActive2] = useState(true)
   const [active3, setActive3] = useState(false)
   const [loading, setLoading] = useState(false)
   const [inputChange, setInput] = useState({ serviceCode: "LGN" })

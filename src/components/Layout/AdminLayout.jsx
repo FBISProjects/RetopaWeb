@@ -155,7 +155,7 @@ const AdminLayout = ({
             <Menu.Item
               key="1"
               onClick={() => {
-                navigateTo("/Admin_Dashboard/Transactions")
+                navigateTo("/Admin_Dashboard/Dashboard")
               }}
               className={type === "adminB" ? "" : "hide "}
             >
