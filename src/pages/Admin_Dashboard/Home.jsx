@@ -35,6 +35,7 @@ const Home = () => {
   const [dets, setDets] = useState([])
   const [tp_id, setTp_id] = useState("")
   const [loading, setLoading] = useState(false)
+  const [adminType, setAdminType] = useState("")
 
   const dispatch = useDispatch()
 
@@ -52,6 +53,8 @@ const Home = () => {
     let UserData = localStorage.getItem("userData")
       ? JSON.parse(localStorage.getItem("userData"))
       : []
+
+    setAdminType(UserData.admintype)
 
     // admin token
     let dataA = sessionStorage.getItem("topup2")
@@ -184,7 +187,7 @@ const Home = () => {
     <>
       <div className="dealer_home_container">
         <div className="dealer_home_group">
-          <div className={type === "Admin" ? "hide" : "dash_dealer_top"}>
+          {/* <div className={type === "Admin" ? "hide" : "dash_dealer_top"}>
             {topCardDetails.map(data => {
               return (
                 <DealerTopCards
@@ -194,7 +197,7 @@ const Home = () => {
                 />
               )
             })}
-          </div>
+          </div> */}
           <div className={type === "Admin" ? "topLayer" : "hide"}>
             <div
               className={

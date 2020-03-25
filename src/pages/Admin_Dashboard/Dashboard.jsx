@@ -9,6 +9,7 @@ const Home = React.lazy(() => import("./Home"))
 
 const Dashboard = () => {
   const [logged, setLogged] = useState(true)
+  const [admintype, setAdminType] = useState("")
   useEffect(() => {
     let onLogged = sessionStorage.getItem("persist:root")
       ? JSON.parse(sessionStorage.getItem("persist:root"))
@@ -20,6 +21,13 @@ const Dashboard = () => {
       setLogged(false)
       return false
     }
+    // get usaer type
+
+    let UserData = localStorage.getItem("userData")
+      ? JSON.parse(localStorage.getItem("userData"))
+      : []
+
+    setAdminType(UserData.admintype)
   }, [])
   const title = (
     <h4>
@@ -31,7 +39,7 @@ const Dashboard = () => {
     <div className={!logged ? "hide" : ""}>
       <AdminLayout title={title} position={["1"]}>
         <Suspense fallback={<h1>Loading...</h1>}>
-          <Home />
+          {admintype === "adminB" ? "cannot view this page" : <Home />}
         </Suspense>
       </AdminLayout>
     </div>

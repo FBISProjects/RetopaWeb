@@ -53,6 +53,7 @@ const AdminLayout = ({
 }) => {
   const [user, setUser] = useState({})
   const [userA, setUserA] = useState({})
+  const [type, setType] = useState("")
   useEffect(() => {
     let data = sessionStorage.getItem("topup")
       ? JSON.parse(sessionStorage.getItem("topup"))
@@ -60,7 +61,7 @@ const AdminLayout = ({
     let UserData = localStorage.getItem("userData")
       ? JSON.parse(localStorage.getItem("userData"))
       : []
-
+    setType(UserData.admintype)
     if (UserData === undefined) {
       return false
     } else {
@@ -74,7 +75,6 @@ const AdminLayout = ({
     })
     profile.then(({ data }) => {
       let user = data.user
-      console.log(user)
       if (user === undefined) {
         return false
       } else {
@@ -145,6 +145,7 @@ const AdminLayout = ({
             onClick={() => {
               navigateTo("/Admin_Dashboard/Dashboard")
             }}
+            className={type === "adminB" ? "hide" : ""}
           >
             <Dash_home_icon />
             <span className="nav-text">Home</span>
@@ -212,9 +213,9 @@ const AdminLayout = ({
           <Menu.Item
             key="2"
             onClick={() => {
-              navigateTo("/Dealer_Dashboard/Transactions")
+              navigateTo("/Admin_Dashboard/Transactions")
             }}
-            className={userA.type === "Admin" ? "hide" : " "}
+            className={type === "adminB" ? "" : "hide "}
           >
             <Dash_history_icon />
             <span className="nav-text">Transactions</span>
